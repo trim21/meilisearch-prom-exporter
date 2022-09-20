@@ -65,19 +65,40 @@ func (e *exporter) Collect(ch chan<- prometheus.Metric) {
 	e.processTasks(ch, enqueued, processing, done)
 }
 
+var processingTaskID = prometheus.NewGauge(prometheus.GaugeOpts{
+	Namespace:   "meilisearch",
+	Name:        "task_id",
+	Help:        "meilisearch processing task delay",
+	ConstLabels: map[string]string{"status": taskProcessing},
+})
+
+var finishedTaskID = prometheus.NewGauge(prometheus.GaugeOpts{
+	Namespace:   "meilisearch",
+	Name:        "task_id",
+	Help:        "meilisearch processing task delay",
+	ConstLabels: map[string]string{"status": taskFinished},
+})
+
+var enqueuedTaskID = prometheus.NewGauge(prometheus.GaugeOpts{
+	Namespace:   "meilisearch",
+	Name:        "task_id",
+	Help:        "meilisearch processing task delay",
+	ConstLabels: map[string]string{"status": taskEnqueue},
+})
+
 var taskProcessDelay = prometheus.NewGauge(prometheus.GaugeOpts{
 	Namespace: "meilisearch",
 	Name:      "task_delay_seconds",
 	Help:      "meilisearch processing task delay",
 })
 
-var taskUnfnishedCount = prometheus.NewGauge(prometheus.GaugeOpts{
+var taskUnfinishedCount = prometheus.NewGauge(prometheus.GaugeOpts{
 	Namespace: "meilisearch",
 	Name:      "task_unfinished_count",
 	Help:      "meilisearch enqueued tasks",
 })
 
-func (e *exporter) processTasks(ch chan<- prometheus.Metric, enqueued *meilisearch.Task, processing *meilisearch.Task, done *meilisearch.Task) {
+func (e *exporter) processTasks(ch chan<- prometheus.Metric, enqueued *meilisearch.Task, processing *meilisearch.Task, finished *meilisearch.Task) {
 	if processing != nil {
 		d := time.Since(processing.EnqueuedAt)
 		taskProcessDelay.Set(d.Seconds())
@@ -87,15 +108,30 @@ func (e *exporter) processTasks(ch chan<- prometheus.Metric, enqueued *meilisear
 		}
 	}
 
-	if enqueued != nil && done != nil {
-		taskUnfnishedCount.Set(float64(enqueued.UID - done.UID))
-		ch <- taskUnfnishedCount
+	if enqueued != nil && finished != nil {
+		taskUnfinishedCount.Set(float64(enqueued.UID - finished.UID))
+		ch <- taskUnfinishedCount
 	}
 
 	ch <- taskProcessDelay
+
+	if processing != nil {
+		processingTaskID.Set(float64(processing.TaskUID))
+		ch <- processingTaskID
+	}
+
+	if enqueued != nil {
+		enqueuedTaskID.Set(float64(enqueued.TaskUID))
+		ch <- enqueuedTaskID
+	}
+
+	if finished != nil {
+		finishedTaskID.Set(float64(finished.TaskUID))
+		ch <- finishedTaskID
+	}
 }
 
-func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilisearch.Task, done *meilisearch.Task, err error) {
+func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilisearch.Task, finished *meilisearch.Task, err error) {
 	var g = errgroup.Group{}
 
 	g.Go(func() error {
@@ -143,7 +179,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 
 		if len(tasks.Results) != 0 {
 			top := tasks.Results[0]
-			done = &top
+			finished = &top
 		}
 
 		return nil
