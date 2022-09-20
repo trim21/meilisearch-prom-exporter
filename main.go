@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/meilisearch/meilisearch-go"
 	"github.com/prometheus/client_golang/prometheus"
@@ -78,7 +79,7 @@ var taskUnfnishedCount = prometheus.NewGauge(prometheus.GaugeOpts{
 
 func (e *exporter) processTasks(ch chan<- prometheus.Metric, enqueued *meilisearch.Task, processing *meilisearch.Task, done *meilisearch.Task) {
 	if processing != nil {
-		d := processing.StartedAt.Sub(processing.EnqueuedAt)
+		d := time.Since(processing.EnqueuedAt)
 		taskProcessDelay.Set(d.Seconds())
 	} else {
 		if enqueued == nil {
