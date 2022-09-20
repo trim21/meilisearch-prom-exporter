@@ -77,13 +77,13 @@ var taskUnfnishedCount = prometheus.NewGauge(prometheus.GaugeOpts{
 })
 
 func (e *exporter) processTasks(ch chan<- prometheus.Metric, enqueued *meilisearch.Task, processing *meilisearch.Task, done *meilisearch.Task) {
-	switch {
-	case processing != nil:
+	if processing != nil {
 		d := processing.StartedAt.Sub(processing.EnqueuedAt)
 		taskProcessDelay.Set(d.Seconds())
-	case enqueued != nil:
-		d := processing.StartedAt.Sub(processing.EnqueuedAt)
-		taskProcessDelay.Set(d.Seconds())
+	} else {
+		if enqueued == nil {
+			taskProcessDelay.Set(0)
+		}
 	}
 
 	if enqueued != nil && done != nil {
