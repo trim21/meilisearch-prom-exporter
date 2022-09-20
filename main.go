@@ -116,17 +116,17 @@ func (e *exporter) processTasks(ch chan<- prometheus.Metric, enqueued *meilisear
 	ch <- taskProcessDelay
 
 	if processing != nil {
-		processingTaskID.Set(float64(processing.TaskUID))
+		processingTaskID.Set(float64(processing.UID))
 		ch <- processingTaskID
 	}
 
 	if enqueued != nil {
-		enqueuedTaskID.Set(float64(enqueued.TaskUID))
+		enqueuedTaskID.Set(float64(enqueued.UID))
 		ch <- enqueuedTaskID
 	}
 
 	if finished != nil {
-		finishedTaskID.Set(float64(finished.TaskUID))
+		finishedTaskID.Set(float64(finished.UID))
 		ch <- finishedTaskID
 	}
 }
