@@ -54,7 +54,7 @@ type exporter struct {
 	client *meilisearch.Client
 }
 
-func (e *exporter) Describe(descs chan<- *prometheus.Desc) {}
+func (e *exporter) Describe(_ chan<- *prometheus.Desc) {}
 
 func (e *exporter) Collect(ch chan<- prometheus.Metric) {
 	enqueued, processing, done, err := e.fetchTasks()
@@ -110,6 +110,9 @@ func (e *exporter) processTasks(ch chan<- prometheus.Metric, enqueued *meilisear
 
 	if enqueued != nil && finished != nil {
 		taskUnfinishedCount.Set(float64(enqueued.UID - finished.UID))
+		ch <- taskUnfinishedCount
+	} else {
+		taskUnfinishedCount.Set(0)
 		ch <- taskUnfinishedCount
 	}
 
