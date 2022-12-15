@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"log"
 	"net/http"
 	"os"
@@ -19,10 +20,12 @@ const taskEnqueue = "enqueued"
 const taskFinished = "succeeded"
 const taskProcessing = "processing"
 
-var addr = pflag.String("listen.address", ":8080", "The address to listen on for HTTP requests.")
-var meilisearchURL = pflag.String("meili.url", "http://127.0.0.1:7700", "The address to listen on for HTTP requests.")
-var meilisearchKey = pflag.String("meili.key", "", "The address to listen on for HTTP requests.")
-var meilisearchIndex = pflag.String("meili.index", "subjects", "The address to listen on for HTTP requests.")
+var flag = pflag.FlagSet{}
+
+var addr = flag.String("listen.address", ":8080", "The address to listen on for HTTP requests.")
+var meilisearchURL = flag.String("meili.url", "http://127.0.0.1:7700", "The address to listen on for HTTP requests.")
+var meilisearchKey = flag.String("meili.key", "", "The address to listen on for HTTP requests.")
+var meilisearchIndex = flag.String("meili.index", "subjects", "The address to listen on for HTTP requests.")
 
 func main() {
 	if err := start(); err != nil {
@@ -32,7 +35,14 @@ func main() {
 }
 
 func start() error {
-	pflag.Parse()
+	flag.Init(os.Args[0], pflag.ContinueOnError)
+	if err := flag.Parse(os.Args[1:]); err != nil {
+		if errors.Is(err, pflag.ErrHelp) {
+			return nil
+		}
+
+		return err
+	}
 
 	client := meilisearch.NewClient(meilisearch.ClientConfig{
 		Host:   *meilisearchURL,
