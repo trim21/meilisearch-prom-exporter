@@ -26,6 +26,7 @@ var addr = flag.String("listen.address", ":8080", "The address to listen on for 
 var meilisearchURL = flag.String("meili.url", "http://127.0.0.1:7700", "The address to listen on for HTTP requests.")
 var meilisearchKey = flag.String("meili.key", "", "The address to listen on for HTTP requests.")
 var meilisearchIndex = flag.String("meili.index", "subjects", "The address to listen on for HTTP requests.")
+var meilisearchTimeout = flag.Duration("meili.timeout", 5*time.Second, "meilisearch requests timeout")
 
 func main() {
 	if err := start(); err != nil {
@@ -45,8 +46,9 @@ func start() error {
 	}
 
 	client := meilisearch.NewClient(meilisearch.ClientConfig{
-		Host:   *meilisearchURL,
-		APIKey: *meilisearchKey,
+		Host:    *meilisearchURL,
+		APIKey:  *meilisearchKey,
+		Timeout: *meilisearchTimeout,
 	})
 
 	exp := &exporter{client: client}
