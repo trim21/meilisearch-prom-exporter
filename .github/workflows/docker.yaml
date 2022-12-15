@@ -39,3 +39,5 @@ jobs:
         if: github.event_name == 'push'
         env:
           DOCKER_TOKEN: ${{ github.token }}
+
+      - run: docker run ghcr.io/trim21/${{ env.IMAGE }}:latest --help
