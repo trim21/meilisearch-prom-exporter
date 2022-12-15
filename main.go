@@ -45,6 +45,8 @@ func start() error {
 		return err
 	}
 
+	fmt.Println("create meilisearch client")
+
 	client := meilisearch.NewClient(meilisearch.ClientConfig{
 		Host:    *meilisearchURL,
 		APIKey:  *meilisearchKey,
