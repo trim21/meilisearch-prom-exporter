@@ -140,7 +140,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
 			Limit:  1,
-			Status: []string{taskProcessing},
+			Statuses: []string{taskProcessing},
 		})
 		if err != nil {
 			return err
@@ -157,7 +157,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
 			Limit:  1,
-			Status: []string{taskEnqueue},
+			Statuses: []string{taskEnqueue},
 		})
 		if err != nil {
 			return err
@@ -174,7 +174,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
 			Limit:  1,
-			Status: []string{taskFinished},
+			Statuses: []string{taskFinished},
 		})
 		if err != nil {
 			return err
