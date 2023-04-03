@@ -3,7 +3,7 @@ module example
 go 1.19
 
 require (
-	github.com/meilisearch/meilisearch-go v0.23.1
+	github.com/meilisearch/meilisearch-go v0.24.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.14.0
 	github.com/sirupsen/logrus v1.9.0
