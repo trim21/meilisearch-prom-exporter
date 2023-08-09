@@ -1,8 +1,8 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
 	"log"
 	"net/http"
 	"os"
@@ -153,7 +153,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
-			Limit:  1,
+			Limit:    1,
 			Statuses: []string{taskProcessing},
 		})
 		if err != nil {
@@ -170,7 +170,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
-			Limit:  1,
+			Limit:    1,
 			Statuses: []string{taskEnqueue},
 		})
 		if err != nil {
@@ -187,7 +187,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
-			Limit:  1,
+			Limit:    1,
 			Statuses: []string{taskFinished},
 		})
 		if err != nil {
