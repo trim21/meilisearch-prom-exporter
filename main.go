@@ -16,10 +16,6 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-const taskEnqueue = "enqueued"
-const taskFinished = "succeeded"
-const taskProcessing = "processing"
-
 var flag = pflag.FlagSet{}
 
 var addr = flag.String("listen.address", ":8080", "The address to listen on for HTTP requests.")
@@ -83,21 +79,21 @@ var processingTaskID = prometheus.NewGauge(prometheus.GaugeOpts{
 	Namespace:   "meilisearch",
 	Name:        "task_id",
 	Help:        "meilisearch processing task delay",
-	ConstLabels: map[string]string{"status": taskProcessing},
+	ConstLabels: map[string]string{"status": string(meilisearch.TaskStatusProcessing)},
 })
 
 var finishedTaskID = prometheus.NewGauge(prometheus.GaugeOpts{
 	Namespace:   "meilisearch",
 	Name:        "task_id",
 	Help:        "meilisearch processing task delay",
-	ConstLabels: map[string]string{"status": taskFinished},
+	ConstLabels: map[string]string{"status": string(meilisearch.TaskStatusSucceeded)},
 })
 
 var enqueuedTaskID = prometheus.NewGauge(prometheus.GaugeOpts{
 	Namespace:   "meilisearch",
 	Name:        "task_id",
 	Help:        "meilisearch processing task delay",
-	ConstLabels: map[string]string{"status": taskEnqueue},
+	ConstLabels: map[string]string{"status": string(meilisearch.TaskStatusEnqueued)},
 })
 
 var taskProcessDelay = prometheus.NewGauge(prometheus.GaugeOpts{
@@ -154,7 +150,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
 			Limit:    1,
-			Statuses: []string{taskProcessing},
+			Statuses: []meilisearch.TaskStatus{meilisearch.TaskStatusProcessing},
 		})
 		if err != nil {
 			return err
@@ -171,7 +167,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
 			Limit:    1,
-			Statuses: []string{taskEnqueue},
+			Statuses: []meilisearch.TaskStatus{meilisearch.TaskStatusEnqueued},
 		})
 		if err != nil {
 			return err
@@ -188,7 +184,7 @@ func (e *exporter) fetchTasks() (enqueued *meilisearch.Task, processing *meilise
 	g.Go(func() error {
 		tasks, err := e.client.Index(*meilisearchIndex).GetTasks(&meilisearch.TasksQuery{
 			Limit:    1,
-			Statuses: []string{taskFinished},
+			Statuses: []meilisearch.TaskStatus{meilisearch.TaskStatusSucceeded},
 		})
 		if err != nil {
 			return err
