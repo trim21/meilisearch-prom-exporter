@@ -33,6 +33,8 @@ github.com/meilisearch/meilisearch-go v0.26.0 h1:6IdFC9S53gEp7FMkt99swIFyEZE+4Tw
 github.com/meilisearch/meilisearch-go v0.26.0/go.mod h1:SxuSqDcPBIykjWz1PX+KzsYzArNLSCadQodWs8extS0=
 github.com/meilisearch/meilisearch-go v0.26.1 h1:3bmo2uLijX7kvBmiZ9LupVfC95TFcRJDgrRTzbOoE4A=
 github.com/meilisearch/meilisearch-go v0.26.1/go.mod h1:SxuSqDcPBIykjWz1PX+KzsYzArNLSCadQodWs8extS0=
+github.com/meilisearch/meilisearch-go v0.26.2 h1:3gTlmiV1dHHumVUhYdJbvh3camiNiyqQ1hNveVsU2OE=
+github.com/meilisearch/meilisearch-go v0.26.2/go.mod h1:SxuSqDcPBIykjWz1PX+KzsYzArNLSCadQodWs8extS0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_golang v1.17.0 h1:rl2sfwZMtSthVU752MqfjQozy7blglC+1SOtjMAMh+Q=
