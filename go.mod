@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/meilisearch/meilisearch-go v0.27.2
-	github.com/prometheus/client_golang v1.20.2
+	github.com/prometheus/client_golang v1.20.3
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/sync v0.8.0
