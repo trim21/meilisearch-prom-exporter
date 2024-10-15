@@ -34,6 +34,8 @@ github.com/meilisearch/meilisearch-go v0.27.1 h1:9FZfZ9Gy9GQHAfuIpKzubDASH1TJ8HG
 github.com/meilisearch/meilisearch-go v0.27.1/go.mod h1:SxuSqDcPBIykjWz1PX+KzsYzArNLSCadQodWs8extS0=
 github.com/meilisearch/meilisearch-go v0.27.2 h1:3G21dJ5i208shnLPDsIEZ0L0Geg/5oeXABFV7nlK94k=
 github.com/meilisearch/meilisearch-go v0.27.2/go.mod h1:SxuSqDcPBIykjWz1PX+KzsYzArNLSCadQodWs8extS0=
+github.com/meilisearch/meilisearch-go v0.28.0 h1:f3XJ66ZM+R8bANAOLqsjvoq/HhQNpVJPYoNt6QgNzME=
+github.com/meilisearch/meilisearch-go v0.28.0/go.mod h1:Szcc9CaDiKIfjdgdt49jlmDKpEzjD+x+b6Y6heMdlQ0=
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 h1:C3w9PqII01/Oq1c1nUAm88MOHcQC9l5mIlSMApZMrHA=
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822/go.mod h1:+n7T8mK8HuQTcFwEeznm/DIxMOiR9yIdICNftLE1DvQ=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
