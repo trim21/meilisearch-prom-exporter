@@ -19,9 +19,9 @@ import (
 var flag = pflag.FlagSet{}
 
 var addr = flag.String("listen.address", ":8080", "The address to listen on for HTTP requests.")
-var meilisearchURL = flag.String("meili.url", "http://127.0.0.1:7700", "The address to listen on for HTTP requests.")
-var meilisearchKey = flag.String("meili.key", "", "The address to listen on for HTTP requests.")
-var meilisearchIndex = flag.String("meili.index", "subjects", "The address to listen on for HTTP requests.")
+var meilisearchURL = flag.String("meili.url", "http://127.0.0.1:7700", "The url of meilisearch")
+var meilisearchKey = flag.String("meili.key", "", "The api key for meilisearch.")
+var meilisearchIndex = flag.String("meili.index", "", "The which index's info to export.")
 var meilisearchTimeout = flag.Duration("meili.timeout", 5*time.Second, "meilisearch requests timeout")
 
 func main() {
