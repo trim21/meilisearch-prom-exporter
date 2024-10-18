@@ -43,11 +43,7 @@ func start() error {
 
 	fmt.Println("create meilisearch client")
 
-	client := meilisearch.NewClient(meilisearch.ClientConfig{
-		Host:    *meilisearchURL,
-		APIKey:  *meilisearchKey,
-		Timeout: *meilisearchTimeout,
-	})
+	client := meilisearch.New(*meilisearchURL, meilisearch.WithAPIKey(*meilisearchKey), meilisearch.WithCustomClient(&http.Client{Timeout: *meilisearchTimeout}))
 
 	exp := &exporter{client: client}
 
@@ -61,7 +57,7 @@ func start() error {
 }
 
 type exporter struct {
-	client *meilisearch.Client
+	client meilisearch.ServiceManager
 }
 
 func (e *exporter) Describe(_ chan<- *prometheus.Desc) {}
