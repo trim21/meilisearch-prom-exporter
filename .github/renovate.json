@@ -1,10 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "postUpdateOptions": [
-    "gomodTidy"
-  ],
   "extends": [
-    "local>trim21/renovate-config"
-  ],
-  "separateMajorMinor": true
+    "local>trim21/renovate-config",
+    "local>trim21/renovate-config:go",
+    "local>trim21/renovate-config:monthly"
+  ]
 }
