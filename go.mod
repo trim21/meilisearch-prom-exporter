@@ -1,6 +1,6 @@
 module example
 
-go 1.23.7
+go 1.23.8
 
 require (
 	github.com/meilisearch/meilisearch-go v0.31.0
