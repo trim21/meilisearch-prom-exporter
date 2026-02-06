@@ -5,7 +5,7 @@ go 1.25.5
 require (
 	github.com/meilisearch/meilisearch-go v0.35.1
 	github.com/prometheus/client_golang v1.23.2
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.9.4
 	github.com/spf13/pflag v1.0.10
 	golang.org/x/sync v0.19.0
 )
