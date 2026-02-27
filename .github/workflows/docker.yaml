@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  main:
+  docker-build:
     env:
       IMAGE: meilisearch-prom-exporter
     runs-on: ubuntu-24.04
