@@ -1,13 +1,13 @@
 module example
 
-go 1.25.14
+go 1.26.0
 
 require (
 	github.com/meilisearch/meilisearch-go v0.36.3
 	github.com/prometheus/client_golang v1.24.1
 	github.com/sirupsen/logrus v1.10.2
 	github.com/spf13/pflag v1.0.10
-	golang.org/x/sync v0.22.0
+	golang.org/x/sync v0.23.0
 )
 
 require (
